@@ -1,0 +1,5 @@
+1.redis修改配置文件 notify-keyspace-events 设置为 Ex (过期事件通知) 有两个配置文件 修改带有service的配置文件才有效
+	参考:https://blog.csdn.net/jiangxiulilinux/article/details/106555799  (各种配置值)
+	开启第一个cli, 执行: setex test 10 test //设置一个键值对 test test 10秒过期
+	开启第二个cli, 执行: PSUBSCRIBE __keyevent@0__:expired //监听事件 0 代表 database: 0 10秒过期后在 订阅中能看到对应的 key 信息 说明配置成功
+	踩坑: 修改带有service配置文件重启不生效, 使用config set notify-keyspace-events Ex 生效了 不知道为啥 第二种能用就用第二种
